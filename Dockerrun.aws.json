@@ -6,10 +6,11 @@
       "image": "davideberno/react-todo-client",
       "hostname": "client",
       "essential": false,
-      "memory": 256
+      "memory": 256,
+      "links": ["api"]
     },
     {
-      "name": "server",
+      "name": "api",
       "image": "davideberno/react-todo-server",
       "hostname": "api",
       "essential": false,
@@ -26,7 +27,7 @@
           "containerPort": 80
         }
       ],
-      "links": ["client", "server"],
+      "links": ["client", "api"],
       "memory": 128
     }
   ]
