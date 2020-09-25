@@ -9,8 +9,8 @@ services:
       - ./server:/app
     # ports:
     #   - 8080:8080
-  mongo:
-    image: mongo:latest
+  # mongo:
+  #   image: mongo:latest
   client:
     build:
       dockerfile: Dockerfile.dev

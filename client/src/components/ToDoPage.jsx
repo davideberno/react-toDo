@@ -28,7 +28,7 @@ export default function ToDoPage(props) {
 
   useEffect(() => {
     const getTodos = async () => {
-      const res = await axios.get("/todos/all");
+      const res = await axios.get("/api/todos/all");
       setData(res.data);
     };
     getTodos();
@@ -38,14 +38,13 @@ export default function ToDoPage(props) {
     const dataUpdate = [...data];
     dataUpdate[id].isDone = !dataUpdate[id].isDone;
     setData([...dataUpdate]);
-    const res = await axios.put("/todos/edit", newData);
-    console.log(res.data);
+    const res = await axios.put("/api/todos/edit", newData);
   };
 
   const onRowAdd = (newData) =>
     new Promise((resolve, reject) => {
       setTimeout(async () => {
-        const res = await axios.post("/todos/new", newData);
+        const res = await axios.post("/api/todos/new", newData);
         setData([...data, res.data]);
         resolve();
       }, 1000);
@@ -54,7 +53,7 @@ export default function ToDoPage(props) {
   const onRowUpdate = (newData, oldData) =>
     new Promise((resolve, reject) => {
       setTimeout(async () => {
-        const res = await axios.put("/todos/edit", newData);
+        const res = await axios.put("/api/todos/edit", newData);
         const dataUpdate = [...data];
         const index = oldData.tableData.id;
         dataUpdate[index] = res.data;
@@ -67,7 +66,7 @@ export default function ToDoPage(props) {
   const onRowDelete = (oldData) =>
     new Promise((resolve, reject) => {
       setTimeout(async () => {
-        const res = await axios.post("/todos/delete", oldData);
+        const res = await axios.post("/api/todos/delete", oldData);
         if (oldData._id === res.data._id) {
           const dataDelete = [...data];
           const index = oldData.tableData.id;
