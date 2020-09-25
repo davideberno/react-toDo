@@ -66,27 +66,27 @@ router.get("/loggedin", (req, res) => {
 });
 
 //Facebook
-router.get("/facebook", passport.authenticate("facebook"));
+// router.get("/facebook", passport.authenticate("facebook"));
 
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
-  (req, res) => {
-    console.log("Facebook login succeded");
-    res.redirect("/");
-  }
-);
+// router.get(
+//   "/facebook/callback",
+//   passport.authenticate("facebook", { failureRedirect: "/login" }),
+//   (req, res) => {
+//     console.log("Facebook login succeded");
+//     res.redirect("/");
+//   }
+// );
 
 //Google
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+// router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  (req, res) => {
-    console.log("Google login succeded");
-    res.redirect("/");
-  }
-);
+// router.get(
+//   "/google/callback",
+//   passport.authenticate("google", { failureRedirect: "/login" }),
+//   (req, res) => {
+//     console.log("Google login succeded");
+//     res.redirect("/");
+//   }
+// );
 
 module.exports = router;
