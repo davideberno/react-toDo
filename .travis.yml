@@ -9,3 +9,14 @@ before_install:
 
 script:
   - docker run -e CI=true davideberno/react-todo npm run test
+
+after_success:
+  - docker build -t davideberno/react-todo-client ./client
+  - docker build -t davideberno/react-todo-nginx ./nginx
+  - docker build -t davideberno/react-todo-server ./server
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to docker hub
+  - docker push davideberno/react-todo-client
+  - docker push davideberno/react-todo-nginx
+  - docker push davideberno/react-todo-server
