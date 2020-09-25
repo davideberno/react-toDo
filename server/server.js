@@ -37,7 +37,8 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, "/client/build")));
 
 //Database
-const uri = "mongodb://mongo:27017/react-todo";
+const uri =
+  "mongodb+srv://dav:JmQDNK0kb8mlz25f@react-todo.mjehn.mongodb.net/react-todo?retryWrites=true&w=majority";
 
 mongoose
   .connect(uri, {
