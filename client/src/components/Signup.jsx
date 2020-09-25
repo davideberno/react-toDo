@@ -58,7 +58,7 @@ export default function SignUp(props) {
       setWarning("Password should be at least 6 character long!");
     } else {
       try {
-        const res = await axios.post("/auth/signup", {
+        const res = await axios.post("/api/auth/signup", {
           firstName,
           lastName,
           email,

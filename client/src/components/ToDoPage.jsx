@@ -57,7 +57,7 @@ export default function ToDoPage(props) {
         const res = await axios.put("/todos/edit", newData);
         const dataUpdate = [...data];
         const index = oldData.tableData.id;
-        dataUpdate[index] = newData;
+        dataUpdate[index] = res.data;
         setData([...dataUpdate]);
 
         resolve();

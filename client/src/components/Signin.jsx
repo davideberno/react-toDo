@@ -53,7 +53,7 @@ export default function SignIn(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/auth/login", { email, password });
+      const res = await axios.post("/api/auth/login", { email, password });
       const { user, err } = res.data;
       if (user) {
         props.setUser(user);

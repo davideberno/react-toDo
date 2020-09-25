@@ -14,7 +14,7 @@ export default function App() {
   useEffect(() => {
     if (!user) {
       async function fetchUser() {
-        const res = await axios.get("/auth/loggedin");
+        const res = await axios.get("/api/auth/loggedin");
         const user = res.data.user;
         if (user) {
           setUser(user);

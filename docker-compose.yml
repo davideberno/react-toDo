@@ -7,8 +7,8 @@ services:
     volumes:
       - /app/node_modules
       - ./server:/app
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
   mongo:
     image: mongo:latest
   client:
@@ -21,15 +21,15 @@ services:
       - /app/node_modules
       - ./client:/app
     stdin_open: true
+    # ports:
+    #   - 3000:3000
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
     ports:
-      - 3000:3000
-  # nginx:
-  #   depends_on:
-  #     - api
-  #     - client
-  #   restart: always
-  #   build:
-  #     dockerfile: Dockerfile.dev
-  #     context: ./nginx
-  #   ports:
-  #     - "3050:80"
+      - "3050:80"
