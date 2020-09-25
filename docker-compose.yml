@@ -1,13 +1,35 @@
 version: "3"
 services:
-  node-app:
-    restart: on-failure
-    build: .
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
     ports:
-      - "5000:5000"
-    links:
-      - mongo
+      - 8080:8080
   mongo:
-    image: mongo
+    image: mongo:latest
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    depends_on:
+      - api
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    stdin_open: true
     ports:
-      - "27017:27017"
+      - 3000:3000
+  # nginx:
+  #   depends_on:
+  #     - api
+  #     - client
+  #   restart: always
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./nginx
+  #   ports:
+  #     - "3050:80"

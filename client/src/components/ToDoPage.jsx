@@ -30,15 +30,16 @@ export default function ToDoPage(props) {
     const getTodos = async () => {
       const res = await axios.get("/todos/all");
       setData(res.data);
-      console.log(res.data);
     };
     getTodos();
   }, []);
 
-  const onDone = (id) => {
+  const onDone = async (id, newData) => {
     const dataUpdate = [...data];
     dataUpdate[id].isDone = !dataUpdate[id].isDone;
     setData([...dataUpdate]);
+    const res = await axios.put("/todos/edit", newData);
+    console.log(res.data);
   };
 
   const onRowAdd = (newData) =>
@@ -54,7 +55,6 @@ export default function ToDoPage(props) {
     new Promise((resolve, reject) => {
       setTimeout(async () => {
         const res = await axios.put("/todos/edit", newData);
-        console.log(res.data);
         const dataUpdate = [...data];
         const index = oldData.tableData.id;
         dataUpdate[index] = newData;
@@ -124,12 +124,14 @@ export default function ToDoPage(props) {
               ? {
                   icon: "restore",
                   tooltip: "Restore",
-                  onClick: (event, rowData) => onDone(rowData.tableData.id),
+                  onClick: (event, rowData) =>
+                    onDone(rowData.tableData.id, rowData),
                 }
               : {
                   icon: "done",
                   tooltip: "Is Done",
-                  onClick: (event, rowData) => onDone(rowData.tableData.id),
+                  onClick: (event, rowData) =>
+                    onDone(rowData.tableData.id, rowData),
                 },
         ]}
         options={{
