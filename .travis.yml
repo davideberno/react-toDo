@@ -20,3 +20,15 @@ after_success:
   - docker push davideberno/react-todo-client
   - docker push davideberno/react-todo-nginx
   - docker push davideberno/react-todo-server
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-central-1"
+  app: "react-todo"
+  env: "ReactTodo-env"
+  bucket_name: "elasticbeanstalk-eu-central-1-174559844437"
+  bucket_path: "react-todo"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

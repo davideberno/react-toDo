@@ -38,12 +38,14 @@ app.use(express.static(path.join(__dirname, "/client/build")));
 
 //Database
 const uri =
-  "mongodb+srv://dav:JmQDNK0kb8mlz25f@react-todo.mjehn.mongodb.net/react-todo?retryWrites=true&w=majority";
+  "mongodb+srv://react-todo.mjehn.mongodb.net/react-todo?retryWrites=true&w=majority";
 
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    user: process.env.MONGO_USER,
+    pass: process.env.MONGO_PASSWORD,
   })
   .then((x) =>
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
