@@ -9,6 +9,8 @@ const UserSchema = new Schema(
     email: String,
     password: String,
     todos: [{ type: Schema.Types.ObjectId, ref: "ToDo" }],
+    faceBookId: String,
+    googleId: String,
   },
   {
     timestamps: true,

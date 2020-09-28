@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, "/client/build")));
 //Database
 const uri =
   "mongodb+srv://react-todo.mjehn.mongodb.net/react-todo?retryWrites=true&w=majority";
+//const uri = "mongodb://mongo:27017/react-todo";
 
 mongoose
   .connect(uri, {
@@ -61,10 +62,6 @@ app.listen(process.env.PORT || 8080, () =>
 
 // app.get("/*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "/client/build/index.html"));
-// });
-
-// app.get("/", (req, res) => {
-//   res.send("Home");
 // });
 
 //Auth routes

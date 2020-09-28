@@ -63,7 +63,7 @@ export default function SignIn(props) {
         setWarning(res.data.err);
       }
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 

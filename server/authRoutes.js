@@ -9,9 +9,8 @@ const User = require("./models/User");
 //Local
 
 //Sign up
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
-  console.log(firstName, lastName, email, password);
   try {
     const user = await User.findOne({ email }).exec();
     if (user) {
@@ -35,7 +34,7 @@ router.post("/signup", async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(500).json({ err });
+    next(err);
   }
 });
 
@@ -65,28 +64,42 @@ router.get("/loggedin", (req, res) => {
   res.json({ user: req.user });
 });
 
-//Facebook
-// router.get("/facebook", passport.authenticate("facebook"));
+//Logout
+router.delete("/logout", (req, res) => {
+  req.logout();
+  res.json({ message: "Successful logout" });
+});
 
-// router.get(
-//   "/facebook/callback",
-//   passport.authenticate("facebook", { failureRedirect: "/login" }),
-//   (req, res) => {
-//     console.log("Facebook login succeded");
-//     res.redirect("/");
-//   }
-// );
+//Facebook;
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", {
+    scope: ["email"],
+  })
+);
 
-//Google
-// router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", { failureRedirect: "/login" }),
+  (req, res) => {
+    console.log("Facebook login succeded");
+    res.redirect("http://localhost:3000/");
+  }
+);
 
-// router.get(
-//   "/google/callback",
-//   passport.authenticate("google", { failureRedirect: "/login" }),
-//   (req, res) => {
-//     console.log("Google login succeded");
-//     res.redirect("/");
-//   }
-// );
+//Google;
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    console.log("Google login succeded");
+    res.redirect("http://localhost:3000/");
+  }
+);
 
 module.exports = router;

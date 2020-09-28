@@ -12,21 +12,27 @@ import "./App.css";
 
 export default function App() {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     if (!user) {
       async function fetchUser() {
-        const res = await axios.get("/api/auth/loggedin");
-        const user = res.data.user;
-        if (user) {
-          setUser(user);
+        try {
+          const res = await axios.get("/api/auth/loggedin");
+          const user = res.data.user;
+          if (user) {
+            setUser(user);
+          }
+        } catch (err) {
+          throw err;
         }
       }
       fetchUser();
     }
   });
+
   return (
     <Router>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
       <Switch>
         <Route
           exact

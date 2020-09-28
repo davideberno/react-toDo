@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-//import axios from "axios";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,7 +8,8 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-//import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@material-ui/core/IconButton";
+import Link from "@material-ui/core/Link";
 
 import Copyright from "./Copyright";
 
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(10),
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -52,24 +52,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
-
-  // const handleFacebook = () => {
-  //   axios
-  //     .get("/auth/facebook")
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  // const handleGoogle = () => {
-  //   axios
-  //     .get("/auth/google")
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -110,31 +92,35 @@ export default function SignIn() {
               </Button>
             </Grid>
           </Grid>
-          {/* <Grid container className={classes.iconsH4}>
+          <Grid container className={classes.iconsH4}>
             <Grid item>
               <Typography component="h4">{"Or sign in with:"}</Typography>
             </Grid>
           </Grid>
           <Grid container className={classes.icons} spacing={2}>
             <Grid item xs={4}>
-              <IconButton aria-label="delete" onClick={handleFacebook}>
-                <img
-                  className={classes.iconImg}
-                  src="/img/facebook-colored-af4249157d.svg"
-                  alt="Facebook logo"
-                />
-              </IconButton>
+              <Link href="/api/auth/facebook">
+                <IconButton aria-label="delete">
+                  <img
+                    className={classes.iconImg}
+                    src="/img/facebook-colored-af4249157d.svg"
+                    alt="Facebook logo"
+                  />
+                </IconButton>
+              </Link>
             </Grid>
             <Grid item xs={4}>
-              <IconButton aria-label="delete" onClick={handleGoogle}>
-                <img
-                  className={classes.iconImg}
-                  src="/img/google-colored-20b8216731.svg"
-                  alt="Google logo"
-                />
-              </IconButton>
+              <Link href="/api/auth/google">
+                <IconButton aria-label="delete">
+                  <img
+                    className={classes.iconImg}
+                    src="/img/google-colored-20b8216731.svg"
+                    alt="Google logo"
+                  />
+                </IconButton>
+              </Link>
             </Grid>
-          </Grid> */}
+          </Grid>
         </form>
       </div>
       <Box mt={8}>

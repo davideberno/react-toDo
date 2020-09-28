@@ -6,72 +6,59 @@ const User = require("./models/User");
 const ToDo = require("./models/ToDo");
 
 router.get("/all", async (req, res, next) => {
-  const foundUser = await User.findOne(
-    { email: req.user.email },
-    (err, user) => {
-      if (err) {
-        next(err);
-      }
-      if (user) {
-        return user;
-      }
-    }
-  )
-    .populate("todos")
-    .exec();
-  res.json(foundUser.todos);
+  try {
+    const foundUser = await User.findOne({ _id: req.user._id })
+      .populate("todos")
+      .exec();
+    res.json(foundUser.todos);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post("/new", async (req, res) => {
+router.post("/new", async (req, res, next) => {
   const { toDo, description, dueDate, priority, isDone } = req.body;
-  const foundUser = await User.findOne(
-    { email: req.user.email },
-    (err, user) => {
-      if (err) {
-        next(err);
-      }
-      if (user) {
-        return user;
-      }
-    }
-  )
-    .populate("todos")
-    .exec();
+  try {
+    const foundUser = await User.findOne({ _id: req.user._id })
+      .populate("todos")
+      .exec();
 
-  const newToDo = await ToDo.create({
-    toDo,
-    description,
-    dueDate,
-    priority,
-    isDone,
-  });
-  await foundUser.todos.push(newToDo._id);
-  await foundUser.save();
-  res.json(newToDo);
+    const newToDo = await ToDo.create({
+      toDo,
+      description,
+      dueDate,
+      priority,
+      isDone,
+    });
+    await foundUser.todos.push(newToDo._id);
+    await foundUser.save();
+    res.json(newToDo);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.put("/edit", async (req, res) => {
+router.put("/edit", async (req, res, next) => {
   const { _id, toDo, description, dueDate, priority, isDone } = req.body;
-  const updatedToDo = await ToDo.findByIdAndUpdate(
-    _id,
-    { toDo, description, dueDate, priority, isDone },
-    { useFindAndModify: false, new: true },
-    (err, toDo) => {
-      if (err) {
-        next(err);
-      }
-      if (toDo) {
-        return toDo;
-      }
-    }
-  );
-  res.json(updatedToDo);
+  try {
+    const updatedToDo = await ToDo.findByIdAndUpdate(
+      _id,
+      { toDo, description, dueDate, priority, isDone },
+      { useFindAndModify: false, new: true }
+    );
+    res.json(updatedToDo);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post("/delete", async (req, res) => {
-  const id = req.body._id;
-  const deletedToDo = await ToDo.findOneAndDelete({ _id: id });
-  res.json(deletedToDo);
+router.post("/delete", async (req, res, next) => {
+  try {
+    const deletedToDo = await ToDo.findOneAndDelete({ _id: req.body._id });
+    res.json(deletedToDo);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
