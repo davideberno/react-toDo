@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MaterialTable, { MTableToolbar, MTableCell } from "material-table";
 
-export default function ToDoPage(props) {
-  const user = props.user;
+export default function ToDoPage({ user }) {
   const columns = [
     {
       title: "To Do",
@@ -28,8 +27,8 @@ export default function ToDoPage(props) {
 
   useEffect(() => {
     const getTodos = async () => {
-      const res = await axios.get("/api/todos/all");
-      setData(res.data);
+      const { data } = await axios.get("/api/todos/all");
+      setData(data);
     };
     getTodos();
   }, []);

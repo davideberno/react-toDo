@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(10),
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp(props) {
+export default function SignUp({ setUser }) {
   const classes = useStyles();
   const history = useHistory();
   const [firstName, setFirstName] = useState();
@@ -58,22 +58,24 @@ export default function SignUp(props) {
       setWarning("Password should be at least 6 character long!");
     } else {
       try {
-        const res = await axios.post("/api/auth/signup", {
+        const {
+          data: { user, err },
+        } = await axios.post("/api/auth/signup", {
           firstName,
           lastName,
           email,
           password,
         });
-        const { user, err } = res.data;
+
         if (user) {
-          props.setUser(user);
+          setUser(user);
           history.push("/");
         }
         if (err) {
-          setWarning(res.data.err);
+          setWarning(err);
         }
       } catch (error) {
-        throw error;
+        console.error(error);
       }
     }
   };

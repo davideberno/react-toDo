@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(10),
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn(props) {
+export default function SignIn({ setUser }) {
   const classes = useStyles();
   const history = useHistory();
   const [email, setEmail] = useState();
@@ -53,17 +53,19 @@ export default function SignIn(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/api/auth/login", { email, password });
-      const { user, err } = res.data;
+      const {
+        data: { user, err },
+      } = await axios.post("/api/auth/login", { email, password });
+
       if (user) {
-        props.setUser(user);
+        setUser(user);
         history.push("/");
       }
       if (err) {
-        setWarning(res.data.err);
+        setWarning(err);
       }
     } catch (error) {
-      throw error;
+      console.error(error);
     }
   };
 
