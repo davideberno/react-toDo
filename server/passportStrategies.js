@@ -31,35 +31,35 @@ passport.use(
 );
 
 //Facebook;
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "/api/auth/facebook/callback",
-      profileFields: ["id", "displayName", "email"],
-    },
-    async (accessToken, refreshToken, profile, cb) => {
-      try {
-        const [firstName, lastName] = profile.displayName.split(" ");
-        //const email = profile.emails[0].value;
-        const user = await User.findOne({ faceBookId: profile.id });
-        if (user) {
-          return cb(null, user);
-        } else {
-          const newUser = await User.create({
-            faceBookId: profile.id,
-            firstName,
-            lastName,
-          });
-          return cb(null, newUser);
-        }
-      } catch (err) {
-        return cb(err);
-      }
-    }
-  )
-);
+// passport.use(
+//   new FacebookStrategy(
+//     {
+//       clientID: process.env.FACEBOOK_APP_ID,
+//       clientSecret: process.env.FACEBOOK_APP_SECRET,
+//       callbackURL: process.env.SERVER_URL + "/api/auth/facebook/callback",
+//       profileFields: ["id", "displayName", "email"],
+//     },
+//     async (accessToken, refreshToken, profile, cb) => {
+//       try {
+//         const [firstName, lastName] = profile.displayName.split(" ");
+//         //const email = profile.emails[0].value;
+//         const user = await User.findOne({ faceBookId: profile.id });
+//         if (user) {
+//           return cb(null, user);
+//         } else {
+//           const newUser = await User.create({
+//             faceBookId: profile.id,
+//             firstName,
+//             lastName,
+//           });
+//           return cb(null, newUser);
+//         }
+//       } catch (err) {
+//         return cb(err);
+//       }
+//     }
+//   )
+// );
 
 //Google;
 passport.use(
@@ -67,7 +67,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/api/auth/google/callback",
+      callbackURL: process.env.SERVER_URL + "/api/auth/google/callback",
       passReqToCallback: true,
     },
     async (request, accessToken, refreshToken, profile, done) => {

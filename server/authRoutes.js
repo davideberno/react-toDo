@@ -71,21 +71,21 @@ router.delete("/logout", (req, res) => {
 });
 
 //Facebook;
-router.get(
-  "/facebook",
-  passport.authenticate("facebook", {
-    scope: ["email"],
-  })
-);
+// router.get(
+//   "/facebook",
+//   passport.authenticate("facebook", {
+//     scope: ["email"],
+//   })
+// );
 
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
-  (req, res) => {
-    console.log("Facebook login succeded");
-    res.redirect("http://localhost:3000/");
-  }
-);
+// router.get(
+//   "/facebook/callback",
+//   passport.authenticate("facebook", { failureRedirect: "/" }),
+//   (req, res) => {
+//     console.log("Facebook login succeded");
+//     res.redirect("/");
+//   }
+// );
 
 //Google;
 router.get(
@@ -95,10 +95,10 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
     console.log("Google login succeded");
-    res.redirect("http://localhost:3000/");
+    res.redirect("/");
   }
 );
 

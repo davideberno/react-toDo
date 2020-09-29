@@ -98,7 +98,7 @@ export default function SignIn() {
             </Grid>
           </Grid>
           <Grid container className={classes.icons} spacing={2}>
-            <Grid item xs={4}>
+            {/* <Grid item xs={4}>
               <Link href="/api/auth/facebook">
                 <IconButton aria-label="delete">
                   <img
@@ -108,7 +108,7 @@ export default function SignIn() {
                   />
                 </IconButton>
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item xs={4}>
               <Link href="/api/auth/google">
                 <IconButton aria-label="delete">
